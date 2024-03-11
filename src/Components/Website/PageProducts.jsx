@@ -1,98 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'
-import { Link } from "react-router-dom";
-import { addCart } from "../ReduxToolkit/slice/sliceCart";
-import { addWish } from "../ReduxToolkit/slice/sliceWish";
-import { useDispatch } from "react-redux";
-const PageProducts = () => {
-    const [data, setData] = useState([]);
-  const [loading, setLoading] = useState();
-  const componentMounted = true;
-    const {category} = useParams()
-    const dispatch = useDispatch();
+import React,{useState,useEffect} from "react";
+import { Link, useParams } from "react-router-dom";
+import {addCart} from '../ReduxToolkit/slice/sliceCart'
+import {addWish} from '../ReduxToolkit/slice/sliceWish'
+import {useDispatch} from 'react-redux'
+import axios from "axios";
+import ReactImageMagnify from 'react-magnify-image';
+
+const Product = () => {
+    const [product,setProduct] =useState([])
+    const { id } = useParams();
+    const dispatch = useDispatch()
 
     useEffect(() => {
-    const getCate = async () => {
-      setLoading(true);
-      const respons = await fetch(`https://rafcartpp.onrender.com/api/${category}`);
+        return () => {
+          const getCate = async() => 
+        {
+          const respons = await axios.get(`https://rafcartpp.onrender.com/api/product/${id}`)
+          setProduct(await respons.data)
+        }
+        getCate() 
+        }
+        
+      },[])
 
-      if (componentMounted) {
-        setData(await respons.json());
-        setLoading(false);
-        // console.log(await respons.json())
-      }
-    };
-    getCate();
-  }, [componentMounted,category]);
-  const handler = data.map((item) => {
-      return (
-        <div
-          className="box-shadow-md  rounded-md shadow-md bg-white  "
-          key={item._id}
-        >
-          <div className="relative group">
-          <div className="r relative">
-              <img src={item.img ? item.img : ''} alt="" className="w-full h-80" />
-              {
-                item.pricerival ? <h4 className=" absolute right-0 top-0 bg-primary text-white py-1 px-2 uppercase">Sale</h4> :''
-              }
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100	 duration-300 ease-in-out flex  justify-center items-center space-x-2 transition">
-              <Link
-                to={`/product/${item._id}`}
-                className="w-10 h-10 rounded-full bg-primary text-white flex justify-center items-center text-lg hover:text-gray-800"
-              >
-                <i className="fas fa-search"></i>
-              </Link>
-              <div
-                onClick={() => dispatch(addWish(item))}
-                className="w-10 h-10 cursor-pointer rounded-full bg-primary text-white flex justify-center items-center text-lg hover:text-gray-800"
-              >
-                <i className="far fa-heart"></i>
-              </div>
-            </div>
-          </div>
-          <div className="pt-4 pb-3 px-4">
-            <h5 className="uppercase font-bold text-xl mb-2 text-gray-800 hover:text-primary transition">
-              {item.title ? item.title.substring(0,20) : ''}
-            </h5>
-            <span className="text-primary text-xl mr-2">{`LE ${item.price ? item.price : ''}`}</span>
-            <span className="line-through text-sm text-gray-400">{item.pricerival ? `LE ${item.pricerival}` : ''}</span>
-            <div className="flex items-center  mt-2">
-              <div className="flex-gap-1 text-sm text-yellow-400">
-                <span>
-                  <i className="fa fa-star"></i>
-                </span>
-                <span>
-                  <i className="fa fa-star"></i>
-                </span>
-                <span>
-                  <i className="fa fa-star"></i>
-                </span>
-                <span>
-                  <i className="fa fa-star"></i>
-                </span>
-                <span>
-                  <i className="fa fa-star"></i>
-                </span>
-              </div>
-              <span className="text-gray-800 ml-2">({item.view ? item.view : ''})</span>
-            </div>
-          </div>
-          <button
-            onClick={() => dispatch(addCart(item))}
-            className="block mt-4 bg-primary hover:text-primary w-full py-2 rounded-b text-white border mb-10 border-primary hover:bg-transparent transition"
-          >
-            Add to Cart
-          </button>
-        </div>
-      );
-    });
-    
   return (
-     
-    <div className="container bg-white">
-    <div className=" flex items-center py-4 gap-3">
+    <div className="container   overflow-hidden bg-white">
+      <div className=" flex items-center py-4 gap-3">
         <Link to="/" className="text-primary hover:text-gray-400  transition">
           <i className="fas fa-home"></i>
         </Link>
@@ -102,21 +35,101 @@ const PageProducts = () => {
           </span>
         </div>
         <p className="text-gray-600 font-medium uppercase">
-          italianl shape {category}
+          italianl shape {product.category}
         </p>
       </div>
-      <div className="  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {loading ? <div className='container flex justify-center py-4 w-screen'>
-        <div className="loading ">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* <ReactImageMagnify
+            {...{
+              smallImage: {
+                alt: "Wristwatch by Ted Baker London",
+                isFluidWidth: true,
+                src: product.img,
+                
+                sizes: "(max-width: 40px) 100vw, (max-width: 100px) 10vw, 30px",
+              },
+              largeImage: {
+                src: product.img,
+                width: 2000,
+                height: 2000,
+              },
+              enlargedImageContainerDimensions: {
+                width: "200%",
+                height: "100%",
+              },
+            }}
+          /> */}
+            <img src={product.img} alt="" />
+            <div>
+            <h3 className="text-xl text-gray-800 mb-3 uppercase font-bold">{product.title}</h3>
+            <div className="flex items-center  mt-2">
+                <div className="flex-gap-1 text-sm text-yellow-400">
+                  <span><i className="fa fa-star"></i></span>
+                  <span><i className="fa fa-star"></i></span>
+                  <span><i className="fa fa-star"></i></span>
+                  <span><i className="fa fa-star"></i></span>
+                  <span><i className="fa fa-star"></i></span>
+                </div>
+                <span className="text-gray-800 ml-2">({product.view})</span>
+              </div>
+              <div className="flex items-center space-x-3 mt-3 text-gray-600">
+                <h2 className="font-bold capitalize">Availability:</h2>
+                <span className="text-gray-400 text-md capitalize">{product.availability <= 0 ? 'Unavailable':'Available'}</span>
+              </div>
+         
+              <div className="flex items-center space-x-3 mt-3 text-gray-600">
+                <h2 className="font-bold capitalize">category:</h2>
+                <span className="text-gray-400 text-md capitalize">{product.category}</span>
+              </div>
+              <div className="flex items-center space-x-3 mt-3 text-gray-600">
+                <h2 className="font-bold capitalize">Sku:</h2>
+                <span className="text-gray-400 text-md upercase">{product.sku}</span>
+              </div>
+              <div className="flex items-center space-x-3 mt-3 text-gray-600">
+                <h2 className="font-bold text-primary text-xl">{`LE ${product.price}.00`}</h2>
+                <span className="line-through text-sm text-gray-400 ">{product.pricerival ? `LE ${product.pricerival.toLocaleString()}.00` : ''}</span>
+              </div>
+              <p className="mt-3 text-gray-400 w-96">{product.aboutProduct}</p>
+     
+     
+      <div className="mt-6 space-x-4">
+        <button onClick={() => dispatch(addCart(product))} className="bg-primary py-2 px-4 border border-primary transition hover:bg-transparent text-white hover:text-gray-600 ">
+            <span><i className="fas fa-shopping-bag "></i></span>
+            <span className="uppercase ml-2 ">Add to cart</span>
+        </button>
+        <button onClick={() => dispatch(addWish(product))} className="bg-transparent py-2 px-4 border border-primary transition hover:bg-primary text-gray-600 hover:text-white">
+            <span><i className="far fa-heart"></i></span>
+            <span  className="uppercase ml-2 ">Add to Wish</span>
+        </button>
       </div>
-        </div> : handler}
-    </div>
-    </div>
-  )
-}
 
-export default PageProducts
+
+      <div className="flex items-center gap-3 mt-4">
+        <Link to="" className="text-gray-400 hover:text-gray-500">
+          <i className="fab fa-facebook-f" ></i>
+        </Link>
+        <Link to="" className="text-gray-400 hover:text-gray-500">
+          <i className="fab fa-twitter" ></i>
+        </Link>
+        <Link to="" className="text-gray-400 hover:text-gray-500">
+          <i className="fab fa-instagram" ></i>
+        </Link>
+
+      </div>
+            </div>
+      </div>
+        <div className="container pb-16 space-y-6 pt-10">
+            <h3 className="text-gray-800 capitalize font-bold text-xl">Product Details</h3>
+            <div className="w-full md:w-3/5 mt-6">
+                <div className="text-gray-600 space-y-6 ml-4">
+                
+                {product.description}
+            </div>
+            </div>
+        </div>
+        
+    </div>
+  );
+};
+
+export default Product;
