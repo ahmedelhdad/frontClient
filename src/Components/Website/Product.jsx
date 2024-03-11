@@ -13,14 +13,13 @@ const Product = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    return () => {
       const getCate = async () => {
         const respons = await axios.get(`https://rafcartpp.onrender.com/api/product/${id}`)
         setProduct(await respons.data)
         setLoading(true)
       }
       getCate()
-    }
+    
 
   }, [id,product,loading])
 
