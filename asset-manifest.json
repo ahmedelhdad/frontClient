@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/frontClient/static/css/main.6fc67e39.css",
+    "main.js": "/frontClient/static/js/main.ad0181eb.js",
+    "static/media/banner-bg.jpg": "/frontClient/static/media/banner-bg.6fc6d1966582d04d3f4f.jpg",
+    "static/media/offer.jpg": "/frontClient/static/media/offer.057e68bef2ff8972da1a.jpg",
+    "static/media/service-hours.svg": "/frontClient/static/media/service-hours.75e308968cb54f8fb1334fe7d5ccf298.svg",
+    "static/media/methods.png": "/frontClient/static/media/methods.e5e412ec6d16cc37711c.png",
+    "static/media/money-back.svg": "/frontClient/static/media/money-back.65ea6cbf47dbd6042db28fa57ee2c8a7.svg",
+    "static/media/logo.svg": "/frontClient/static/media/logo.d8dbfb4c90ea4e227158a836f2dfaeb1.svg",
+    "static/media/outdoor-cafe.svg": "/frontClient/static/media/outdoor-cafe.b2eca285732afc0d20988ccd9814268d.svg",
+    "static/media/restaurant.svg": "/frontClient/static/media/restaurant.8c9d11f7bf56c079218d6dfdfa345b3b.svg",
+    "static/media/sofa.svg": "/frontClient/static/media/sofa.be7a676dbc2fe368e934a05610045d7c.svg",
+    "static/media/delivery-van.svg": "/frontClient/static/media/delivery-van.66f6f6890ba6c7096c97fc6d89c9866b.svg",
+    "static/media/office.svg": "/frontClient/static/media/office.ee0139e1773b3dee96ed9fbddc90e54f.svg",
+    "static/media/bed-2.svg": "/frontClient/static/media/bed-2.60c0ec4a4c3ea298a6d150c03a94c505.svg",
+    "index.html": "/frontClient/index.html",
+    "static/media/bed.svg": "/frontClient/static/media/bed.0c501a92d36d4421205b43e9ed4b2002.svg",
+    "main.6fc67e39.css.map": "/frontClient/static/css/main.6fc67e39.css.map",
+    "main.ad0181eb.js.map": "/frontClient/static/js/main.ad0181eb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6fc67e39.css",
+    "static/js/main.ad0181eb.js"
+  ]
+}
