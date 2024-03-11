@@ -22,7 +22,7 @@ const Product = () => {
       getCate()
     }
 
-  }, [])
+  }, [id,product,loading])
 
   return loading ? 
   <div className="container   overflow-hidden bg-white">
