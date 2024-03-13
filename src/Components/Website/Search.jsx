@@ -3,27 +3,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCart } from "../ReduxToolkit/slice/sliceCart";
 import { addWish } from "../ReduxToolkit/slice/sliceWish";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const Search = () => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState();
-  const componentMounted = true;
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   const searchItem = useSelector((state) => state.search.value);
   useEffect(() => {
     const getCate = async () => {
       setLoading(true);
-      const respons = await fetch("https://rafcartpp.onrender.com/api/products");
-
-      if (componentMounted) {
-        setData(await respons.json());
-        setLoading(false);
-      }
+      const respons = await axios.get("https://rafcartpp.onrender.com/api/products");
+      setData(respons.data)
+      setLoading(false)
     };
     getCate();
-  }, [componentMounted]);
-  const handlerSearch = data
-    .filter((el) => el.title.includes(searchItem))
+  }, []);
+  const handlerSearch = data.filter((el) => el.title.includes(searchItem))
     .map((item) => {
       return (
         <div
@@ -31,7 +27,7 @@ const Search = () => {
           key={item._id}
         >
           <div className="relative group">
-            <img src={item.img} alt="" className="w-full" />
+            <img src={item.img} alt="" className="w-full h-60" />
             <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100	 duration-300 ease-in-out flex  justify-center items-center space-x-2 transition">
               <Link
                 to={`/product/${item._id}`}
@@ -49,9 +45,9 @@ const Search = () => {
           </div>
           <div className="pt-4 pb-3 px-4">
             <h5 className="uppercase font-bold text-xl mb-2 text-gray-800 hover:text-primary transition">
-              {item.title.substring(0, 20)}
+              {item.title? item.title.substring(0, 20):''}
             </h5>
-            <span className="text-primary text-xl mr-2">{`$${item.price.toLocaleString()}.00`}</span>
+            <span className="text-primary text-xl mr-2">{`$${item.price?item.price.toLocaleString():'0'}.00`}</span>
             <span className="line-through text-sm text-gray-400">{`$${item.pricerival.toLocaleString()}.00`}</span>
             <div className="flex items-center  mt-2">
               <div className="flex-gap-1 text-sm text-yellow-400">
